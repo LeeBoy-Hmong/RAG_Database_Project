@@ -1,0 +1,37 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram name="Page-1" id="kP2oq7FMx9H8RbOaTv3S">
+    <mxGraphModel dx="1042" dy="708" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Vjbl4sHo0Gcl9m9OsJor-3" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;RAG Pipline&lt;/h1&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="365" y="25" width="143" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-7" value="Chat" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.chat;" vertex="1" parent="1">
+          <mxGeometry x="301" y="169" width="78" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-8" value="Dashboard" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.intune.dashboard" vertex="1" parent="1">
+          <mxGeometry x="484" y="169" width="70" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-6" value="&lt;h4 style=&quot;margin-bottom: 130px;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Web Fronted&lt;/font&gt;&lt;/h4&gt;" style="html=1;outlineConnect=0;whiteSpace=wrap;shape=mxgraph.archimate3.application;appType=grouping;archiType=square;dashed=1;align=center;container=0;" vertex="1" parent="1">
+          <mxGeometry x="291" y="116" width="275" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-9" value="&lt;h4 style=&quot;margin-bottom: 130px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Metabase Embedded&lt;/span&gt;&lt;/h4&gt;" style="html=1;outlineConnect=0;whiteSpace=wrap;shape=mxgraph.archimate3.application;appType=grouping;archiType=square;dashed=1;fillColor=none;align=center;container=0;" vertex="1" parent="1">
+          <mxGeometry x="484" y="352" width="275" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-10" value="&lt;h4 style=&quot;margin-bottom: 130px;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;RAG Chat UI&lt;/font&gt;&lt;/h4&gt;" style="html=1;outlineConnect=0;whiteSpace=wrap;shape=mxgraph.archimate3.application;appType=grouping;archiType=square;dashed=1;align=center;container=0;" vertex="1" parent="1">
+          <mxGeometry x="105" y="352" width="274" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;flowAnimation=1;fillColor=#fff2cc;strokeColor=#d6b656;" edge="1" parent="1" source="bdRvnodyI-iputZrPPJ_-6" target="bdRvnodyI-iputZrPPJ_-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;flowAnimation=1;fillColor=#fff2cc;strokeColor=#d6b656;" edge="1" parent="1" source="bdRvnodyI-iputZrPPJ_-6" target="bdRvnodyI-iputZrPPJ_-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdRvnodyI-iputZrPPJ_-18" value="FASTAPI Backend" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="286.5" y="610" width="300" height="550" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
