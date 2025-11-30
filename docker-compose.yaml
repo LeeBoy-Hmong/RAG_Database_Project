@@ -1,0 +1,17 @@
+services:
+  metabase:
+    image: metabase/metabase:latest
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: h2
+    volumes:
+    - ./metabase-data:/metabase-data  # Creates a folder metabase-data with another folder in it called metabase-data (maintain data)
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"  # REST API
+      - "6334:6334"  # gRPC API
+    volumes:
+      - ./qdrant-storage:/qdrant/storage
