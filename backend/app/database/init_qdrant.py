@@ -25,3 +25,11 @@ def init_qdrant():
         collection_name="document3-collection",
         vectors_config = models.VectorParams(size=embedding_dim, distance=models.Distance.COSINE)
     )'''
+
+
+# Create a function that is going to embed you dimension model into the qdrant database.
+# Utilize the QdrantClient() function to map out where our client will run. (Hint: You should've already created a docker-compose file to run that local host)
+# Create a variable for the embedding dimension - pull the model from "embedding_services.py", that's where you already created your embedding model.
+    # To ensure accuracy of dimension input - use the get_sentence_embedding_dimension() method.
+# Create a collection for your client, this is where all the new data is going to be stored.
+    # Ensure to create a name and fixed you vector parameters.
