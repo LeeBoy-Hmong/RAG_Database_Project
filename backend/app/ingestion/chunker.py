@@ -1,3 +1,7 @@
+### Responsible for splitting documents
+### Should stay dumb and resusable
+### No ML models should be here
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def chunker(documents):

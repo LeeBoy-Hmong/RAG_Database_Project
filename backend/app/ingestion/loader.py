@@ -1,9 +1,9 @@
+### Get raw documents
+### Knows nothing about embeddings
+### Should never import models
+
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
 '''Load all text files from the docs file path'''
 def load_documents(dir_path="backend/app/ingestion/docs"):  # 
     print(f"Documents are loading from {dir_path}...")
