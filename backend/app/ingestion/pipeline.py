@@ -6,7 +6,9 @@
 from chunker import chunker
 from loader import load_documents
 from sentence_transformers import SentenceTransformer
-from database.init_qdrant import init_qdrant 
+from database.init_qdrant import init_qdrant
+from qdrant_client.models import PointStruct
+import hashlib as h
 
 def run_ingestion():
     documents = load_documents()
@@ -16,9 +18,49 @@ def run_ingestion():
     chunks_txt = [c.page_content for c in chunks]
 # Safety check: avoid chunks[0] crash & encoding of an empty list
     if not chunks_txt:
-        raise ValueError("No chunks wer produced. Check loader/chunker output.")
+        raise ValueError("No chunks were produced. Check loader/chunker output.")
 # Embed in batch
     embeddings = model.encode(chunks_txt)
+# Building out the points
+    qdrant = init_qdrant()
+    collection_name = "rag_documents"
+    
+    points = []
+    for i, (chunk, vector) in enumerate(zip(chunks, embeddings)):
+        source = chunk.metadata.get("source", "unknown_source")
+        raw_id = f"{source}::{i:06d}",
+        chunk_id = h.sha256(raw_id.encode("utf-8")).hexdigest()  # Make into a hash for deduplication
+
+        points.append(
+            PointStruct(
+                id = chunk_id,
+                vector = vector.tolist(),
+                payload = {
+                    "source": source,
+                    "chunk index": i,
+                    "text": chunk.page_content,
+                },
+            )
+        )
+# Call the Qdrant upsert
+    qdrant.upsert(collection_name = collection_name, points = points)
+    print(f"Upserted {len(points)} chunks into '{collection_name}'.")
+
+# Retrieval sanity check
+    test_query = "What is this document about?"
+    q_vector = model.encode(test_query).tolist()
+
+    hits = qdrant.search(
+        collection_name = collection_name,
+        query_vector = q_vector,
+        limit = 3
+    )
+    print("\nTop 3 hits")
+    for rank, hit in enumerate(hits, start = 1):
+        payload = hit.payload or {}
+        preview = payload.get("text", "")[:160].replace("\n", " ")
+        print(f"{rank}) score={hit.score:.4f} source={payload.get('source')} chunk ={payload.get('chunk_index')}")
+        print(f"    preview: {preview}\n")
 
     print("\n")
     print(f"Chunks to embed: {len(chunks_txt)}")
