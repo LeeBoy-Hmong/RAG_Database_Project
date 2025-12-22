@@ -6,6 +6,7 @@
 from chunker import chunker
 from loader import load_documents
 from sentence_transformers import SentenceTransformer
+from database.init_qdrant import init_qdrant 
 
 def run_ingestion():
     documents = load_documents()
@@ -19,9 +20,10 @@ def run_ingestion():
 # Embed in batch
     embeddings = model.encode(chunks_txt)
 
+    print("\n")
     print(f"Chunks to embed: {len(chunks_txt)}")
     print(f"Embedding returned: {len(embeddings)}")
-    print(f"Single embedding length: {len(embeddings[0])}")
+    print(f"Single embedding length (Dimension): {len(embeddings[0])}")
     print(f"First chunk preview", chunks_txt[0][:200])
 
     return chunks

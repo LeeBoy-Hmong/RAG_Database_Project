@@ -5,10 +5,15 @@ def init_qdrant():
     qdrant = QdrantClient(url="http://localhost:6333")
     embedding_dim = model.get_sentence_embedding_dimension()
     # print(The embedding dimension of this model is: {embedding_dim} ")
-    qdrant.recreate_collection(
-        collection_name= "document-vectors",
-        vectors_config= models.VectorParams(size=embedding_dim, distance=models.Distance.COSINE)
-    )
+    if not qdrant.collection_exists("rag-documents"):
+        qdrant.create_collection(
+            collection_name = "rag-documents",
+            vectors_config = models.VectorParams(size = embedding_dim, distance = models.Distance.COSINE)
+        )
+        print("Collection is created!")
+    else:
+        print("Using existing Collection: 'rag-documents'")
+    return qdrant
 
 '''def init_qdrant2():
     qdrant = QdrantClient("http://localmachine:6333")
