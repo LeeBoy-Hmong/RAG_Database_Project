@@ -3,12 +3,12 @@
 ### This is where we verify outputs between stages
 # Embedding is a stage, not a primitive -- so it belogs here
 
-from chunker import chunker
-from loader import load_documents
+from backend.app.ingestion.chunker import chunker
+from backend.app.ingestion.loader import load_documents
 from sentence_transformers import SentenceTransformer
-from database.init_qdrant import init_qdrant
+from backend.app.database.init_qdrant import init_qdrant
 from qdrant_client.models import PointStruct
-import hashlib as h
+import uuid as u
 
 def run_ingestion():
     documents = load_documents()
@@ -28,8 +28,8 @@ def run_ingestion():
     points = []
     for i, (chunk, vector) in enumerate(zip(chunks, embeddings)):
         source = chunk.metadata.get("source", "unknown_source")
-        raw_id = f"{source}::{i:06d}",
-        chunk_id = h.sha256(raw_id.encode("utf-8")).hexdigest()  # Make into a hash for deduplication
+        raw_id = f"{source}::{i:06d}"
+        chunk_id = str(u.uuid5(u.NAMESPACE_URL, raw_id))  # Made into a UUID - expected from Qdrant.
 
         points.append(
             PointStruct(
