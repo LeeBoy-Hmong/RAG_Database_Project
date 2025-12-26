@@ -8,6 +8,7 @@ from backend.app.ingestion.loader import load_documents
 from sentence_transformers import SentenceTransformer
 from backend.app.database.init_qdrant import init_qdrant
 from qdrant_client.models import PointStruct
+from qdrant_client import QdrantClient
 import uuid as u
 
 def run_ingestion():
@@ -50,13 +51,24 @@ def run_ingestion():
     test_query = "What is this document about?"
     q_vector = model.encode(test_query).tolist()
 
-    hits = qdrant.search(
+    hits = qdrant.query_points(
         collection_name = collection_name,
-        query_vector = q_vector,
+        query = q_vector,
         limit = 3
     )
     print("\nTop 3 hits")
     for rank, hit in enumerate(hits, start = 1):
+        # hit is a tuple in your environment
+        # Try the common patterns:
+        if hasattr(hit[0], "payload"):        # (point, score)
+            point, score = hit[0], hit[1]
+        elif hasattr(hit[1], "payload"):      # (score, point)
+            score, point = hit[0], hit[1]
+        else:
+            # fallback: just print the tuple so you can see it
+            print(f"{rank}) hit tuple = {hit}")
+            continue
+
         payload = hit.payload or {}
         preview = payload.get("text", "")[:160].replace("\n", " ")
         print(f"{rank}) score={hit.score:.4f} source={payload.get('source')} chunk ={payload.get('chunk_index')}")
