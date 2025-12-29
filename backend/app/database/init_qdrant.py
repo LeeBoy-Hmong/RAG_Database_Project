@@ -1,8 +1,11 @@
 from qdrant_client import QdrantClient, models
 from backend.app.services.embedding_services import model, model2, model3
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 def init_qdrant():
-    qdrant = QdrantClient(url="http://localhost:6333")
+    qdrant = QdrantClient(url=)
     embedding_dim = model.get_sentence_embedding_dimension()
     # print(The embedding dimension of this model is: {embedding_dim} ")
     if not qdrant.collection_exists("rag_documents"):
