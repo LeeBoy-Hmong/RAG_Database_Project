@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 def init_qdrant():
-    qdrant = QdrantClient(url=)
+    qdrant = QdrantClient(url=os.getenv("LOCAL_QDRANT"))
     embedding_dim = model.get_sentence_embedding_dimension()
     # print(The embedding dimension of this model is: {embedding_dim} ")
     if not qdrant.collection_exists("rag_documents"):

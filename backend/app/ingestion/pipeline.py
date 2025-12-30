@@ -8,7 +8,6 @@ from backend.app.ingestion.loader import load_documents
 from sentence_transformers import SentenceTransformer
 from backend.app.database.init_qdrant import init_qdrant
 from qdrant_client.models import PointStruct
-from qdrant_client import QdrantClient
 import uuid as u
 
 def run_ingestion():
