@@ -28,7 +28,7 @@ def run_ingestion():
     points = []
     for i, (chunk, vector) in enumerate(zip(chunks, embeddings)):
         source = chunk.metadata.get("source", "unknown_source")
-        raw_id = f"{source}::{i:06d}"
+        raw_id = f"{source}::{chunk.page_content}"
         chunk_id = str(u.uuid5(u.NAMESPACE_URL, raw_id))  # Made into a UUID - expected from Qdrant.
 
         points.append(
