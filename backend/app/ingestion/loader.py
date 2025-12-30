@@ -2,7 +2,7 @@
 ### Knows nothing about embeddings
 ### Should never import models
 
-from langchain_community.document_loaders import TextLoader, DirectoryLoader
+from langchain_community.document_loaders import TextLoader, PyPDFLoader, DirectoryLoader
 import os
 '''Load all text files from the docs file path'''
 def load_documents(dir_path="backend/app/ingestion/docs"):  # 
@@ -10,8 +10,8 @@ def load_documents(dir_path="backend/app/ingestion/docs"):  #
 # Check if documents in the particular directory exist
     if not os.path.exists(dir_path):
         raise FileNotFoundError(f"The directory {dir_path} could not be found. Please ensure the file exist.")
-# Load all .txt files from the document directory
-    doc_loader = DirectoryLoader(
+# Load all .txt files from dir_path
+    txt_loader = DirectoryLoader(
         path = dir_path,
         glob = "*.txt",
         loader_cls = TextLoader,
@@ -19,8 +19,14 @@ def load_documents(dir_path="backend/app/ingestion/docs"):  #
             "encoding": "UTF-8",  # Needs to be passed in - Windows Python is not utilizing the correct encoder. 
         },
     )
+# Load all .pdf files from dir_path
+    pdf_loader = DirectoryLoader(
+        path = dir_path,
+        glob = "*.pdf",
+        loader_cls = PyPDFLoader
+    )
 
-    documents = doc_loader.load()
+    documents = txt_loader.load() + pdf_loader.load()
 # Raise error is the document (.txt files) do not exist
     if len(documents) == 0:
         raise FileNotFoundError(f"Can not find the particular file(s) you are looking for. Please ensure files exist.")
