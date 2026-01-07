@@ -15,7 +15,7 @@ def init_qdrant():
         )
         print("Collection is created!")
     else:
-        print("Using existing Collection: 'rag-documents'")
+        print("Using existing Collection: 'rag_documents'")
     return qdrant
 
 '''def init_qdrant2():
