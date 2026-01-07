@@ -21,14 +21,14 @@ def run_ingestion():
         raise ValueError("No chunks were produced. Check loader/chunker output.")
 # Embed in batch
     embeddings = model.encode(chunks_txt)
-# Building out the points
+# Building out the points - load to the Qdrant client
     qdrant = init_qdrant()
     collection_name = "rag_documents"
     
     points = []
     for i, (chunk, vector) in enumerate(zip(chunks, embeddings)):
         source = chunk.metadata.get("source", "unknown_source")
-        raw_id = f"{source}::{chunk.page_content[:2000]}"  # Content based ID - hased, to avoid large content
+        raw_id = f"{source}::{chunk.page_content[:2000]}"  # Content based ID - hashed, to avoid large content
         chunk_id = str(u.uuid5(u.NAMESPACE_URL, raw_id))  # Made into a UUID - expected from Qdrant.
 
         points.append(

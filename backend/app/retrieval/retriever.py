@@ -1,7 +1,13 @@
 
-# from backend.app.database.init_qdrant import init_qdrant
-# from backend.app.services.embedding_services import model
+from backend.app.database.init_qdrant import init_qdrant
+from backend.app.services.embedding_services import model as embedder
+from qdrant_client.qdrant_client import QdrantClient, models
+from typing import Sequence
+from dotenv import load_dotenv
+import os
+import re
 
+load_dotenv()
 '''
 test_query = "What is this document about?"
 q_vector = model.encode(test_query).tolist()
@@ -36,22 +42,37 @@ The system must turn input words into embeddings, compare them to the stored vec
 
 ## Text Normalization
 # Trim spaces - collapse multiple spaces - remove weird invisible characters
-import re
+# print("Start Script...") - run me to test program
+# class Retrieval:
+#    def __init__(self):
+#        self.embedder = embedder  # Imported the model to ensure ownership inside the class.
 
-print("Start Script...")
-class Retrieval:
-    def __init__(self):
-        pass
+def clean_input(question: str):
+    rem_whitespace = question.strip()
+    rem_metachar = re.sub(r'[^\w\s]', "", rem_whitespace) # Remove anything that's not a word or whitespace
+    collapsed = " ".join(rem_metachar.split())  # transform back to regular spacing
+    return collapsed
 
-    def clean_input(self, question: str):
-        rem_whitespace = question.strip()
-        rem_metachar = re.sub(r'[^\w\s]', "", rem_whitespace) # Remove anything that's not a word or whitespace
-        collapsed = " ".join(rem_metachar.split())  # transform back to regular spacing
-        return collapsed
+# Create a function method for an embed_query - need to turn the clean text into a vector (float)
+def embed_query(clean_question: str) -> Sequence[float]:  # Changed from list[float] which is mutable & specific to Sequence[float] to allow flexibility
+    return embedder.encode(clean_question)
+        
+# Create a function method for a search.
+def search_query(question: Sequence[float]):
+    clean = clean_input(question)
+    vector_query = embed_query(clean)
+    qdrant = os.getenv("LOCAL_QDRANT")
+    hits = qdrant.query_points(
+        collection_name = "rag_documents",
+        query_vector = vector_query,
+        limit = 3
+    )
+    return hits
 
-if __name__ == "__main__":
-    string = "Michael @ is % the coolest?"
-    cleaner = Retrieval()
-    result = cleaner.clean_input(string)
-    print(result)
+# Create a function method for format hits.
+
+# Create a function method for what's retrieved.
+
+# if __name__ == "__main__":
+#     cleaner = Retrieval()
 
