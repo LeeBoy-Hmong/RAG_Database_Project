@@ -69,6 +69,7 @@ def search_query(question: Sequence[float]):
     )
     return hits
 
+
 # Create a function method for format hits.
 
 # Create a function method for what's retrieved.

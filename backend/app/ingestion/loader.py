@@ -4,8 +4,11 @@
 
 from langchain_community.document_loaders import TextLoader, PyPDFLoader, DirectoryLoader
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 '''Load all text files from the docs file path'''
-def load_documents(dir_path="backend/app/ingestion/docs"):  # 
+def load_documents(dir_path=os.getenv("STORAGE_PATH")):  # 
     print(f"Documents are loading from {dir_path}...")
 # Check if documents in the particular directory exist
     if not os.path.exists(dir_path):
@@ -18,7 +21,7 @@ def load_documents(dir_path="backend/app/ingestion/docs"):  #
         loader_kwargs={
             "encoding": "UTF-8",  # Needs to be passed in - Windows Python is not utilizing the correct encoder. 
         },
-    )
+    ) 
 # Load all .pdf files from dir_path
     pdf_loader = DirectoryLoader(
         path = dir_path,
